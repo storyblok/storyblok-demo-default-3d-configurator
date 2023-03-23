@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import svgPlugin from 'vite-plugin-svg'
+
 export default defineNuxtConfig({
   modules: ['@unocss/nuxt', ['@storyblok/nuxt', { accessToken: process.env.STORYBLOK_TOKEN }]],
   unocss: {
@@ -18,5 +20,8 @@ export default defineNuxtConfig({
 
     // core options
     shortcuts: [],
+  },
+  vite: {
+    plugins: [svgPlugin()],
   },
 })
