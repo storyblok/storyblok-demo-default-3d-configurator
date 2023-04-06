@@ -2,6 +2,7 @@
 import svgPlugin from 'vite-plugin-svg'
 
 export default defineNuxtConfig({
+  ssr: false,
   modules: ['@unocss/nuxt', ['@storyblok/nuxt', { accessToken: process.env.STORYBLOK_TOKEN }]],
   unocss: {
     // presets

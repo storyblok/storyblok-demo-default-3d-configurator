@@ -3,13 +3,16 @@ import { BasicShadowMap, sRGBEncoding, NoToneMapping, Color, MeshStandardMateria
 import { TresCanvas, useTres } from '@tresjs/core'
 import { OrbitControls, Environment, GLTFModel, useTweakPane } from '@tresjs/cientos'
 
+const props = defineProps<{
+  blok: Object
+}>()
+
 const gl = {
   antialias: true,
   alpha: true,
   shadows: true,
   clearColor: 'teal',
   powerPreference: 'high-performance',
-  windowSize: true,
   shadowMapType: BasicShadowMap,
   outputEncoding: sRGBEncoding,
   toneMapping: NoToneMapping,
@@ -29,15 +32,17 @@ watchEffect(() => {
 <template>
   <TresCanvas v-bind="gl">
     <TresPerspectiveCamera :args="[45, 1, 0.1, 1000]" :position="[5, 5, 5]" />
-    <TresAmbientLight :args="['#ffffff', 0.5]" />
-    <TresDirectionalLight :args="['white', 1]" :position="[0, 1, 0]" />
     <Suspense>
       <Environment :blur="1" preset="sunset" ref="environmentTexture" />
 
       <template #fallback> Loading </template>
     </Suspense>
-    <TheVehicle :env="environmentTexture" />
-    <TresGridHelper :args="[4, 4]" />
+    <Suspense>
+      <TheVehicle v-if="blok.model" :env="environmentTexture" :vehicle-model="blok.model" />
+    </Suspense>
+    <TresAmbientLight :args="['#ffffff', 0.5]" />
+    <TresDirectionalLight :args="['white', 1]" :position="[0, 1, 0]" />
+    <TresGridHelper :args="[20, 20]" />
     <OrbitControls />
   </TresCanvas>
 </template>

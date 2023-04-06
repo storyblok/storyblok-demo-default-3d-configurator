@@ -1,53 +1,86 @@
 <script setup lang="ts">
 import { Color, MeshStandardMaterial } from 'three'
 import { useSeek } from '@tresjs/core'
-import { useTweakPane, GLTFModel } from '@tresjs/cientos'
+import { useTweakPane, GLTFModel, useGLTF } from '@tresjs/cientos'
 
 const props = defineProps<{
   env?: string
+  availableColors?: string[]
+  metalness?: number
+  roughness?: number
+  vehicleModel: Object
 }>()
 
 const { pane } = useTweakPane()
 
 const carRef = ref(null)
 
-const { seek } = useSeek()
+let model = ''
 
-watch(carRef, ({ model }) => {
-  if (model) {
-    const car = model.children[0]
-    car.scale.set(0.01, 0.01, 0.01)
-    console.log(car)
-    const body = seek(car, 'name', 'Octane_Octane_Body_0')
+watchEffect(async () => {
+  if (props.vehicleModel) {
+    const { scene } = await useGLTF(props.vehicleModel.content?.model?.filename, { draco: true })
+    model = scene
 
-    if (body) {
-      body.material = new MeshStandardMaterial({
-        color: new Color(0x000000),
-        envMap: props.env,
-        metalness: 0.5,
-        roughness: 0.5,
-      })
-
-      pane.addInput(body.material, 'color', {
-        label: body.name.replaceAll('Octane_', '').replace('_0', ' '),
-        view: 'text',
-        color: { type: 'float' },
-      })
-    }
-    pane.addInput(car.rotation, 'y', {
-      label: 'Rotation',
-      min: -Math.PI,
-      max: Math.PI,
-      step: 0.01,
+    console.log('Awiwi', {
+      model,
+      filane: props.vehicleModel?.content?.model?.filename,
     })
+
+    /* carRef.value.needsUpdate() */
   }
 })
+
+/* watch(
+  () => carRef.value,
+  value => {
+    if (value.model) {
+      value.model.needsUpdate()
+      const car = value.model.children[0]
+      let body
+
+      car.traverse(child => {
+        if (child.isMesh) {
+          if (child.name === 'car_body002') {
+            body = child
+          }
+        }
+      })
+
+      if (body) {
+        body.material = new MeshStandardMaterial({
+          color: new Color(0x00b3b0),
+          envMap: props.env,
+          metalness: 0.5,
+          roughness: 0.5,
+        })
+
+        pane.addInput(body.material, 'color', {
+          view: 'text',
+          color: { type: 'float' },
+        })
+      }
+    }
+  },
+  {
+    immediate: true,
+  },
+) */
+
+/* watchEffect(() => {
+  if (props.availableColors) {
+    pane.addInput(props, 'availableColors', {
+      label: 'Color',
+      options: props.availableColors,
+    })
+  }
+}) */
 </script>
 
 <template>
   <Suspense>
-    <GLTFModel ref="carRef" path="/models/octane_-_rocket_league_car/scene.gltf" draco />
-
+    <!--  <GLTFModel ref="carRef" :path="vehicleModel.content.model.filename" draco /> -->
+    <TresMesh ref="carRef" v-if="model" v-bind="model" />
     <template #fallback> Loading </template>
   </Suspense>
 </template>
