@@ -15,72 +15,34 @@ const { pane } = useTweakPane()
 
 const carRef = ref(null)
 
-let model = ''
+let model = shallowRef()
 
 watchEffect(async () => {
   if (props.vehicleModel) {
-    const { scene } = await useGLTF(props.vehicleModel.content?.model?.filename, { draco: true })
-    model = scene
+    const { scene, nodes, materials } = await useGLTF(props.vehicleModel.content?.model?.filename, { draco: true })
+    model.value = scene
 
-    console.log('Awiwi', {
-      model,
-      filane: props.vehicleModel?.content?.model?.filename,
-    })
-
-    /* carRef.value.needsUpdate() */
-  }
-})
-
-/* watch(
-  () => carRef.value,
-  value => {
-    if (value.model) {
-      value.model.needsUpdate()
-      const car = value.model.children[0]
-      let body
-
-      car.traverse(child => {
-        if (child.isMesh) {
-          if (child.name === 'car_body002') {
-            body = child
-          }
-        }
-      })
-
-      if (body) {
+    if (props.vehicleModel.content?.paint) {
+      const meshes = props.vehicleModel.content?.paint.split(',')
+      meshes.forEach(element => {
+        const body = nodes[element.trim()]
         body.material = new MeshStandardMaterial({
           color: new Color(0x00b3b0),
           envMap: props.env,
           metalness: 0.5,
           roughness: 0.5,
         })
-
         pane.addInput(body.material, 'color', {
+          label: element,
           view: 'text',
           color: { type: 'float' },
         })
-      }
+      })
     }
-  },
-  {
-    immediate: true,
-  },
-) */
-
-/* watchEffect(() => {
-  if (props.availableColors) {
-    pane.addInput(props, 'availableColors', {
-      label: 'Color',
-      options: props.availableColors,
-    })
   }
-}) */
+})
 </script>
 
 <template>
-  <Suspense>
-    <!--  <GLTFModel ref="carRef" :path="vehicleModel.content.model.filename" draco /> -->
-    <TresMesh ref="carRef" v-if="model" v-bind="model" />
-    <template #fallback> Loading </template>
-  </Suspense>
+  <TresMesh ref="carRef" v-bind="model" />
 </template>

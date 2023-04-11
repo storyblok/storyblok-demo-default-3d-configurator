@@ -7,8 +7,8 @@ specifiers:
   '@nuxt/content': ^2.5.2
   '@storyblok/design-system': ^3.7.0
   '@storyblok/nuxt': ^5.3.2
-  '@tresjs/cientos': 2.0.0-alpha.5
-  '@tresjs/core': 2.0.0-alpha.5
+  '@tresjs/cientos': 2.0.0-beta.0
+  '@tresjs/core': 2.0.0-beta.4
   '@types/three': ^0.150.0
   '@unocss/nuxt': ^0.50.6
   '@vueuse/core': ^9.13.0
@@ -25,8 +25,8 @@ devDependencies:
   '@iconify-json/carbon': 1.1.16
   '@iconify-json/logos': 1.1.23
   '@nuxt/content': 2.5.2
-  '@tresjs/cientos': 2.0.0-alpha.5_gntravbm2kmfzerllg736cpwyy
-  '@tresjs/core': 2.0.0-alpha.5_three@0.150.1
+  '@tresjs/cientos': 2.0.0-beta.0_67bkl6vcer7tuwhxoedfi6ei7e
+  '@tresjs/core': 2.0.0-beta.4_three@0.150.1
   '@types/three': 0.150.0
   '@unocss/nuxt': 0.50.6
   '@vueuse/core': 9.13.0
@@ -35,6 +35,10 @@ devDependencies:
   vite-plugin-svg: 0.7.0
 
 packages:
+
+  /-/0.0.1:
+    resolution: {integrity: sha512-3HfneK3DGAm05fpyj20sT3apkNcvPpCuccOThOPdzz8sY7GgQGe0l93XH9bt+YzibcTIgUAIMoyVJI740RtgyQ==}
+    dev: true
 
   /@alvarosabu/prettier-config/1.3.0:
     resolution: {integrity: sha512-/akJC6/pWkJwXFUjndbpG14SgpxcW5wzaKjK9Rls4g1bNnDvu/qWwIAlzJo4bc0KQTPLUGfK5Iuu9+hlrYnIZA==}
@@ -1242,13 +1246,13 @@ packages:
       '@storyblok/js': 2.1.1
     dev: false
 
-  /@tresjs/cientos/2.0.0-alpha.5_gntravbm2kmfzerllg736cpwyy:
-    resolution: {integrity: sha512-8SCxT8rIZ/5bPWLsp/T/YwqbmkoQ8OdRJfAKU2WrOVZpr01tpn6w+T6jFQDb8uFDiHatYR0PdHT7LejUi2tORw==}
+  /@tresjs/cientos/2.0.0-beta.0_67bkl6vcer7tuwhxoedfi6ei7e:
+    resolution: {integrity: sha512-Vr1naG7LOUxZvREta/7RtBqecYzcf507QI7H8ChT8mYkv1atsPcx13IpX4+hC3rMNXDGkrjBkhU1MLBd8/5BQQ==}
     peerDependencies:
-      '@tresjs/core': 2.0.0-alpha.1
+      '@tresjs/core': 2.0.0-beta.0
       three: latest
     dependencies:
-      '@tresjs/core': 2.0.0-alpha.5_three@0.150.1
+      '@tresjs/core': 2.0.0-beta.4_three@0.150.1
       '@vueuse/core': 9.13.0_vue@3.2.47
       three: 0.150.1
       three-stdlib: 2.21.8_three@0.150.1
@@ -1257,13 +1261,28 @@ packages:
       - '@vue/composition-api'
     dev: true
 
-  /@tresjs/core/2.0.0-alpha.5_three@0.150.1:
-    resolution: {integrity: sha512-5/ghgSGiNlaBVRVCRbgeMdbcQV0cC6pVjsE4lZXRL9cY1pko83Z4XMeG1bzzgI4PrKXOHNkxMtpGsbwgOSNozQ==}
+  /@tresjs/core/2.0.0-beta.2_three@0.150.1:
+    resolution: {integrity: sha512-Ie+ktgsT+XDBUcKtn3T1dQ6bk8jCyNs9OpxJP03huKN525wVysozfKOpCEPOY2w5Qrm9gQQ0RiI6gm9tJqElKw==}
+    peerDependencies:
+      three: latest
+      vue: ^3.2.47
+    dependencies:
+      '-': 0.0.1
+      '@alvarosabu/utils': 2.3.0
+      '@vueuse/core': 9.13.0
+      three: 0.150.1
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+    dev: true
+
+  /@tresjs/core/2.0.0-beta.4_three@0.150.1:
+    resolution: {integrity: sha512-zemXQSz3uAxh27DhvfEIUK50+yH+R7tYbMzbA0+WYwghPO6w+u4sV/MQxGISWsDeD1GOVYlldq6cHqLW5dXP8g==}
     peerDependencies:
       three: latest
       vue: ^3.2.47
     dependencies:
       '@alvarosabu/utils': 2.3.0
+      '@tresjs/core': 2.0.0-beta.2_three@0.150.1
       '@vueuse/core': 9.13.0
       three: 0.150.1
     transitivePeerDependencies:

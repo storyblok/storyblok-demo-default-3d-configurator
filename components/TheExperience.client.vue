@@ -20,17 +20,16 @@ const gl = {
 
 const environmentTexture = ref(null)
 
-const { state } = useTres()
-
+const context = ref()
 watchEffect(() => {
-  if (state) {
-    console.log('state', state)
+  if (context) {
+    console.log('context', context)
   }
 })
 </script>
 
 <template>
-  <TresCanvas v-bind="gl">
+  <TresCanvas v-bind="gl" ref="context">
     <TresPerspectiveCamera :args="[45, 1, 0.1, 1000]" :position="[5, 5, 5]" />
     <Suspense>
       <Environment :blur="1" preset="sunset" ref="environmentTexture" />
@@ -38,7 +37,7 @@ watchEffect(() => {
       <template #fallback> Loading </template>
     </Suspense>
     <Suspense>
-      <TheVehicle v-if="blok.model" :env="environmentTexture" :vehicle-model="blok.model" />
+      <TheVehicle :env="environmentTexture" :vehicle-model="blok.model" />
     </Suspense>
     <TresAmbientLight :args="['#ffffff', 0.5]" />
     <TresDirectionalLight :args="['white', 1]" :position="[0, 1, 0]" />
