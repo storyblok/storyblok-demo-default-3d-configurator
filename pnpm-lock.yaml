@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@alvarosabu/prettier-config': ^1.3.0
   '@iconify-json/carbon': ^1.1.16
+  '@iconify-json/ion': ^1.1.9
   '@iconify-json/logos': ^1.1.23
   '@nuxt/content': ^2.5.2
   '@storyblok/design-system': ^3.7.0
@@ -23,6 +24,7 @@ dependencies:
 devDependencies:
   '@alvarosabu/prettier-config': 1.3.0
   '@iconify-json/carbon': 1.1.16
+  '@iconify-json/ion': 1.1.9
   '@iconify-json/logos': 1.1.23
   '@nuxt/content': 2.5.2
   '@tresjs/cientos': 2.0.0-beta.0_67bkl6vcer7tuwhxoedfi6ei7e
@@ -587,6 +589,12 @@ packages:
 
   /@iconify-json/carbon/1.1.16:
     resolution: {integrity: sha512-AD8bcnRSGA0WfcGEass2FbA0sagrUzrpFx5WchuDy3uf7yKBWumdypdQK121DH321fQDl5+zZQ26T6gC9knwUQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/ion/1.1.9:
+    resolution: {integrity: sha512-0LCnmt2DOV9XkKEnDhfOxU2ejZfrNLErczdJ6ONQvqpXoh9yeZIsPa2YILdF6cMuxCRqxVuU8BAdpUrNy+j1ng==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

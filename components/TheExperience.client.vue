@@ -18,9 +18,23 @@ const gl = {
   toneMapping: NoToneMapping,
 }
 
+const configurator = useCarConfigurator()
+
+console.log(configurator.value)
+
+watchEffect(() => {
+  if (props.blok) {
+    configurator.value.availableMaterials = props.blok.materials.availableMaterials.map((material, index) => ({
+      id: index,
+      ...material,
+    }))
+  }
+})
+
 const environmentTexture = ref(null)
 
 const context = ref()
+
 watchEffect(() => {
   if (context) {
     console.log('context', context)
@@ -57,6 +71,7 @@ DefaultLoadingManager.onProgress = (item, loaded, total) => {
       </div>
     </div>
   </Transition>
+  <CarCustomizerPane v-if="blok" :blok="blok" />
   <TresCanvas v-bind="gl" ref="context">
     <TresPerspectiveCamera :args="[45, 1, 0.1, 1000]" :position="[5, 5, 5]" />
     <Suspense>
