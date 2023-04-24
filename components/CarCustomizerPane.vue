@@ -14,7 +14,7 @@ function selectMaterial(material) {
     <h2 class="text-primary text-4xl mb-4">Customize</h2>
     <ul class="grid grid-cols-6 mb-4 list-none ml-0 pl-0">
       <li
-        class="relative w-9 h-9 rounded flex cursor-pointer border-solid border-2 border-transparent hover:border-red"
+        class="relative w-9 h-9 rounded flex cursor-pointer border-solid border-2 border-transparent hover:border-red mb-4"
         :style="{ backgroundColor: material.color }"
         v-for="material in configurator.availableMaterials"
         @click="selectMaterial(material)"
