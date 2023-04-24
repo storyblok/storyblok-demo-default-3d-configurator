@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Color, MeshStandardMaterial } from 'three'
+import { Color, MeshPhysicalMaterial, Object3D } from 'three'
 import { useSeek } from '@tresjs/core'
 import { useTweakPane, GLTFModel, useGLTF } from '@tresjs/cientos'
 
@@ -18,7 +18,7 @@ const { pane } = useTweakPane()
 const carRef = ref(null)
 
 let model = shallowRef()
-let body = ref(null)
+let body = ref<Object3D | null>(null)
 watchEffect(async () => {
   if (props.vehicleModel) {
     const { scene, nodes, materials } = await useGLTF(props.vehicleModel.content?.model?.filename, { draco: true })
@@ -30,17 +30,12 @@ watchEffect(async () => {
       const meshes = props.vehicleModel.content?.paint.split(',')
       meshes.forEach(element => {
         body.value = nodes[element.trim()]
-        body.value.material = new MeshStandardMaterial({
+        body.value.material = new MeshPhysicalMaterial({
           color: new Color(0x00b3b0),
           envMap: props.env,
           metalness: 0.5,
           roughness: 0.5,
         })
-        /*         pane.addInput(body.material, 'color', {
-          label: element,
-          view: 'text',
-          color: { type: 'float' },
-        }) */
       })
     }
   }

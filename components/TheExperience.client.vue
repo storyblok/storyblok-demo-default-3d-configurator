@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { BasicShadowMap, sRGBEncoding, NoToneMapping, Color, MeshStandardMaterial, DefaultLoadingManager } from 'three'
-import { TresCanvas, useTres } from '@tresjs/core'
-import { OrbitControls, Environment, GLTFModel, useTweakPane } from '@tresjs/cientos'
+import { BasicShadowMap, sRGBEncoding, NoToneMapping, DefaultLoadingManager } from 'three'
+import { TresCanvas } from '@tresjs/core'
+import { OrbitControls, Environment, useTweakPane } from '@tresjs/cientos'
+import gsap from 'gsap'
 
 const props = defineProps<{
   blok: Object
@@ -18,9 +19,46 @@ const gl = {
   toneMapping: NoToneMapping,
 }
 
-const configurator = useCarConfigurator()
+const cameraRef = ref(null)
+const firstTime = ref(true)
+function animateCameraIn() {
+  if (!firstTime.value) return
+  gsap.to(cameraRef?.value?.position, {
+    duration: 3,
+    delay: 0.5,
+    x: 5.04,
+    y: 2.84,
+    z: 6.46,
+    ease: 'power4.out',
+    onUpdate: () => {
+      cameraRef?.value?.lookAt(0, 0, 0)
+    },
+    onComplete: () => {
+      firstTime.value = false
+    },
+  })
+}
 
-console.log(configurator.value)
+const { pane } = useTweakPane()
+
+/* watchEffect(() => {
+  if (cameraRef.value) {
+    pane.addMonitor(cameraRef.value.position, 'x', {
+      multiline: true,
+      lineCount: 5,
+    })
+    pane.addMonitor(cameraRef.value.position, 'y', {
+      multiline: true,
+      lineCount: 5,
+    })
+    pane.addMonitor(cameraRef.value.position, 'z', {
+      multiline: true,
+      lineCount: 5,
+    })
+  }
+}) */
+
+const configurator = useCarConfigurator()
 
 watchEffect(() => {
   if (props.blok) {
@@ -50,6 +88,7 @@ DefaultLoadingManager.onProgress = (item, loaded, total) => {
   if (loaded === total) {
     saveLastTotalLoaded = total
     hasFinishLoading.value = true
+    animateCameraIn()
   }
   progress.value = Math.round(((loaded - saveLastTotalLoaded) / (total - saveLastTotalLoaded)) * 100 || 100, 2)
 }
@@ -73,7 +112,11 @@ DefaultLoadingManager.onProgress = (item, loaded, total) => {
   </Transition>
   <CarCustomizerPane v-if="blok" :blok="blok" />
   <TresCanvas v-bind="gl" ref="context">
-    <TresPerspectiveCamera :args="[45, 1, 0.1, 1000]" :position="[5, 5, 5]" />
+    <TresPerspectiveCamera
+      ref="cameraRef"
+      :args="[45, 1, 0.1, 1000]"
+      :position="firstTime ? [21, 9, 16.5] : [5.04, 2.84, 6.46]"
+    />
     <Suspense>
       <Environment :blur="1" preset="sunset" ref="environmentTexture" />
 
