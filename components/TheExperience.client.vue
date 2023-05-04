@@ -21,6 +21,7 @@ const gl = {
 
 const cameraRef = ref(null)
 const firstTime = ref(true)
+
 function animateCameraIn() {
   if (!firstTime.value) return
   gsap.to(cameraRef?.value?.position, {
@@ -38,25 +39,6 @@ function animateCameraIn() {
     },
   })
 }
-
-const { pane } = useTweakPane()
-
-/* watchEffect(() => {
-  if (cameraRef.value) {
-    pane.addMonitor(cameraRef.value.position, 'x', {
-      multiline: true,
-      lineCount: 5,
-    })
-    pane.addMonitor(cameraRef.value.position, 'y', {
-      multiline: true,
-      lineCount: 5,
-    })
-    pane.addMonitor(cameraRef.value.position, 'z', {
-      multiline: true,
-      lineCount: 5,
-    })
-  }
-}) */
 
 const configurator = useCarConfigurator()
 
@@ -125,7 +107,7 @@ DefaultLoadingManager.onProgress = (item, loaded, total) => {
     <Suspense>
       <TheVehicle :env="environmentTexture" :vehicle-model="blok.model" />
     </Suspense>
-    <TresAmbientLight :args="['#ffffff', 0.5]" />
+    <TresAmbientLight :args="['#ffffff', 2]" />
     <TresDirectionalLight :args="['white', 1]" :position="[0, 1, 0]" />
     <TresGridHelper :args="[20, 20]" />
     <OrbitControls />

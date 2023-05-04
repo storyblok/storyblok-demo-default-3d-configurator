@@ -11,7 +11,8 @@ function selectMaterial(material) {
 </script>
 <template>
   <div class="fixed top-28 right-2 bg-white rounded-lg p-4 z-10 w-96 shadow-xl">
-    <h2 class="text-primary text-4xl mb-4">Customize</h2>
+    <p class="p-4 bg-gray-100 text-gray-500"><strong class="mr-4">Model</strong>{{ blok.model.name }}</p>
+    <h3 class="text-primary text-2xl mb-4">Color</h3>
     <ul class="grid grid-cols-6 mb-4 list-none ml-0 pl-0">
       <li
         class="relative w-9 h-9 rounded flex cursor-pointer border-solid border-2 border-transparent hover:border-red mb-4"
