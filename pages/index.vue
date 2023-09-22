@@ -4,9 +4,11 @@ const story = await useAsyncStoryblok(
   { version: 'draft', resolve_relations: 'car-configurator.model' },
   { resolveRelations: 'car-configurator.model' },
 )
-
-console.log({ story })
 </script>
+
 <template>
-  <StoryblokComponent v-if="story" :blok="story.content" />
+  <StoryblokComponent
+    v-if="story"
+    :blok="story.content"
+  />
 </template>

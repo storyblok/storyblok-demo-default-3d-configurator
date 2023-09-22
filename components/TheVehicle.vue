@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Color, MeshPhysicalMaterial, Object3D } from 'three'
+import type { Object3D } from 'three'
+import { Color, MeshPhysicalMaterial } from 'three'
 
 const props = defineProps<{
   env?: string
@@ -13,9 +14,9 @@ const configurator = useCarConfigurator()
 
 const carRef = ref(null)
 
-let model = shallowRef()
-let body = ref<Object3D | null>(null)
-let nodes = shallowRef([])
+const model = shallowRef()
+const body = ref<Object3D | null>(null)
+const nodes = shallowRef([])
 
 watchEffect(async () => {
   if (props.vehicleModel) {
@@ -33,7 +34,7 @@ watchEffect(async () => {
         roughness: 0.5,
       })
       const meshes = props.vehicleModel.content?.paint.split(',')
-      meshes.forEach(element => {
+      meshes.forEach((element) => {
         body.value = nodes[element.trim()]
         body.value.material = customMaterial
       })
@@ -44,7 +45,7 @@ watchEffect(async () => {
 watchEffect(() => {
   if (configurator.value?.selectedMaterial) {
     const meshes = props.vehicleModel.content?.paint.split(',')
-    meshes.forEach(element => {
+    meshes.forEach((element) => {
       body.value = configurator.value.nodes[element.trim()]
       body.value.material.color = new Color(configurator.value?.selectedMaterial.color)
       body.value.material.metalness = configurator.value?.selectedMaterial.metalness
@@ -55,5 +56,8 @@ watchEffect(() => {
 </script>
 
 <template>
-  <TresMesh ref="carRef" v-bind="model" />
+  <TresMesh
+    ref="carRef"
+    v-bind="model"
+  />
 </template>

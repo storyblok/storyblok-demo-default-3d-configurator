@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { BasicShadowMap, NoToneMapping, DefaultLoadingManager } from 'three'
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 
 const props = defineProps<{
   blok: Object
@@ -52,12 +52,6 @@ const environmentTexture = ref(null)
 
 const context = ref()
 
-watchEffect(() => {
-  if (context) {
-    console.log('context', context)
-  }
-})
-
 const hasFinishLoading = ref(false)
 const progress = ref(0)
 
@@ -85,27 +79,50 @@ DefaultLoadingManager.onProgress = (item, loaded, total) => {
     >
       <div class="w-200px">
         <p>Loading 3D experience</p>
-        <SbLoading type="bar" size="normal" :model-value="progress" show-percentage color="primary" />
+        <SbLoading
+          type="bar"
+          size="normal"
+          :model-value="progress"
+          show-percentage
+          color="primary"
+        />
       </div>
     </div>
   </Transition>
-  <CarCustomizerPane v-if="blok" :blok="blok" />
-  <TresCanvas v-bind="gl" ref="context">
+  <CarCustomizerPane
+    v-if="blok"
+    :blok="blok"
+  />
+  <TresCanvas
+    v-bind="gl"
+  >
     <TresPerspectiveCamera
       ref="cameraRef"
       :args="[45, 1, 0.1, 1000]"
       :position="firstTime ? [21, 9, 16.5] : [5.04, 2.84, 6.46]"
     />
     <Suspense>
-      <Environment :blur="1" preset="sunset" ref="environmentTexture" />
+      <Environment
+        ref="environmentTexture"
+        :blur="1"
+        preset="sunset"
+      />
 
-      <template #fallback> Loading </template>
+      <template #fallback>
+        Loading
+      </template>
     </Suspense>
     <Suspense>
-      <TheVehicle :env="environmentTexture" :vehicle-model="blok.model" />
+      <TheVehicle
+        :env="environmentTexture"
+        :vehicle-model="blok.model"
+      />
     </Suspense>
     <TresAmbientLight :args="['#ffffff', 2]" />
-    <TresDirectionalLight :args="['white', 1]" :position="[0, 1, 0]" />
+    <TresDirectionalLight
+      :args="['white', 1]"
+      :position="[0, 1, 0]"
+    />
     <TresGridHelper :args="[20, 20]" />
     <OrbitControls />
   </TresCanvas>

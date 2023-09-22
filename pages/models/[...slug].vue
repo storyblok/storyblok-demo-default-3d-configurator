@@ -5,6 +5,10 @@ const story = await useAsyncStoryblok(
   { resolveRelations: 'car-configurator.model' },
 )
 </script>
+
 <template>
-  <StoryblokComponent v-if="story" :blok="story.content" />
+  <StoryblokComponent
+    v-if="story"
+    :blok="story.content"
+  />
 </template>
