@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { BasicShadowMap, sRGBEncoding, NoToneMapping, DefaultLoadingManager } from 'three'
-import { TresCanvas } from '@tresjs/core'
-import { OrbitControls, Environment, useTweakPane } from '@tresjs/cientos'
+import { BasicShadowMap, NoToneMapping, DefaultLoadingManager } from 'three'
 import gsap from 'gsap'
 
 const props = defineProps<{
@@ -12,10 +10,9 @@ const gl = {
   antialias: true,
   alpha: true,
   shadows: true,
-  clearColor: 'teal',
+  clearColor: 'aliceblue',
   powerPreference: 'high-performance',
   shadowMapType: BasicShadowMap,
-  outputEncoding: sRGBEncoding,
   toneMapping: NoToneMapping,
 }
 

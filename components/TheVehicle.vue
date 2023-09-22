@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { Color, MeshPhysicalMaterial, Object3D } from 'three'
-import { useSeek } from '@tresjs/core'
-import { useTweakPane, GLTFModel, useGLTF } from '@tresjs/cientos'
 
 const props = defineProps<{
   env?: string
@@ -13,16 +11,15 @@ const props = defineProps<{
 
 const configurator = useCarConfigurator()
 
-const { pane } = useTweakPane()
-
 const carRef = ref(null)
 
 let model = shallowRef()
 let body = ref<Object3D | null>(null)
 let nodes = shallowRef([])
+
 watchEffect(async () => {
   if (props.vehicleModel) {
-    const { scene, nodes, materials } = await useGLTF(props.vehicleModel.content?.model?.filename, { draco: true })
+    const { scene, nodes } = await useGLTF(props.vehicleModel.content?.model?.filename, { draco: true })
     model.value = scene
 
     configurator.value.model = scene

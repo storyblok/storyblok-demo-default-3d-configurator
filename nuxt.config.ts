@@ -3,7 +3,7 @@ import svgPlugin from 'vite-plugin-svg'
 
 export default defineNuxtConfig({
   ssr: false,
-  modules: ['@unocss/nuxt', ['@storyblok/nuxt', { accessToken: process.env.STORYBLOK_TOKEN }]],
+  modules: ['@unocss/nuxt', ['@storyblok/nuxt', { accessToken: process.env.STORYBLOK_TOKEN }], '@tresjs/nuxt'],
   unocss: {
     // presets
     uno: true, // enabled `@unocss/preset-uno`
@@ -24,5 +24,6 @@ export default defineNuxtConfig({
   },
   vite: {
     plugins: [svgPlugin()],
+    optimizeDeps: { exclude: ['fsevents'] },
   },
 })
